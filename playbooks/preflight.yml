@@ -1,0 +1,8 @@
+---
+- hosts: all
+  gather_facts: no
+  tasks:
+    - name: "Check distro variable"
+      fail:
+        msg: "Variable 'distro' should be defined for each host in host_vars"
+      when: distro is undefined

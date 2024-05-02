@@ -1,0 +1,4 @@
+---
+- name: Install containerd
+  include_tasks: "virtualization/containerd.yml"
+  when: virtualization is contains("containerd")

@@ -1,0 +1,40 @@
+---
+- set_fact:
+    disabled_users: "{{ auth_base.users | dict2items | selectattr('value.state', '==', 'disabled') | map(attribute='key') }}"
+
+- set_fact:
+    server_users: "{{ auth.groups | dict2items | map(attribute='value') | flatten | unique | difference(disabled_users) }}"
+
+- name: Create server groups
+  group:
+    name: "{{ item.key }}"
+    gid: "{{ auth_base.groups[item.key].gid }}"
+  loop: "{{ auth.groups | dict2items }}"
+
+- name: Create server user groups
+  group:
+    name: "{{ item }}"
+    gid: "{{ auth_base.users[item].gid }}"
+  loop: "{{ server_users }}"
+
+- name: Create server users
+  user:
+    name: "{{ item }}"
+    uid: "{{ auth_base.users[item].uid }}"
+    group: "{{ item }}"
+    groups: "{{ auth.groups | dict2items | selectattr('value', 'contains', 'owlbook') | map(attribute='key') }}"
+    shell: "{{ auth_base.users[item].shell | default('/bin/bash') }}"
+  loop: "{{ server_users }}"
+
+- name: Place authorized keys
+  authorized_key:
+    user: "{{ item }}"
+    state: present
+    key: "{{ auth_base.users[item].ssh_keys | join('\n') }}"
+  loop: "{{ server_users }}"
+
+- name: Deactivate disabled users
+  user:
+    name: "{{ item }}"
+    state: "absent"
+  loop: "{{ disabled_users }}"

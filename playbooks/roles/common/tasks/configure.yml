@@ -1,0 +1,6 @@
+---
+#- name: Switch to the legacy variant of iptables because of a bug in the nft version
+#  alternatives:
+#    name: iptables
+#    path: /usr/sbin/iptables-legacy
+#    link: /etc/alternatives/iptables

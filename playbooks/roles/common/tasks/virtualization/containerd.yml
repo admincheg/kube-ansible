@@ -1,0 +1,52 @@
+---
+- name: Add containerd repository key
+  apt_key:
+    url: "https://download.docker.com/linux/debian/gpg"
+    state: "present"
+
+- name: Add containerd repo
+  copy:
+    dest: "/etc/apt/sources.list.d/containerd.list"
+    content: "deb [arch=amd64] https://download.docker.com/linux/debian {{ ansible_facts.distribution_release }} stable"
+
+- name: Install containerd runtime
+  package:
+    name:
+      - containerd.io
+    update_cache: True
+
+- name: Place containerd configuration
+  template:
+    src: "containerd/config.toml.j2"
+    dest: "/etc/containerd/config.toml"
+  register: containerd_config
+
+- name: Enable containerd service
+  service:
+    name: containerd
+    enabled: yes
+    state: started
+
+- name: Restart containerd service
+  service:
+    name: containerd
+    state: restarted
+  when: containerd_config.changed
+
+- name: Create containerd modules config
+  copy:
+    dest: "/etc/modules-load.d/containerd.conf"
+    content: "br_netfilter"
+  register: br_netfilter
+
+- name: Load br_netfiler
+  shell: "modprobe br_netfilter"
+  when: br_netfilter.changed
+
+- name: Enable bridge nf-call-iptables
+  sysctl:
+    name: net.bridge.bridge-nf-call-iptables
+    value: '1'
+    sysctl_set: yes
+    state: present
+    reload: yes

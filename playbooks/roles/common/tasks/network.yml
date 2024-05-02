@@ -1,0 +1,13 @@
+---
+- name: Configure resolv.conf
+  copy:
+    dest: "/etc/resolv.conf"
+    content: "{{ resolv | join('\n') }}"
+
+- name: Enable ipv4 forwarding
+  sysctl:
+    name: net.ipv4.ip_forward
+    value: '1'
+    sysctl_set: yes
+    state: present
+    reload: yes

@@ -1,0 +1,16 @@
+---
+- import_playbook: preflight.yml
+- import_playbook: bootstrap.yml
+
+- hosts: all
+  become: true
+  tasks:
+    - include_role:
+        name: "common"
+      tags:
+        - always
+
+- hosts: test
+  become: true
+  roles:
+    - kubernetes

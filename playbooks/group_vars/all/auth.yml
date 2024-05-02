@@ -1,0 +1,24 @@
+---
+auth_base:
+  users:
+    owlbook:
+      uid: 20000
+      gid: 20000
+      state: active
+      ssh_keys:
+        - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDPlNi7XWO9IiOhnO9QzOgO2DsTUjlHbRFgWQ1YBGbS8qrmrFD7SdL0ght+CG+TAcCFo4lVCzjg60aWbMz+v4/BMZfeMkE34xVNgh2NS6X+2bOyUBKaCI9fBfd7BA4P49XkbHE2biVIyyLb6PKjGewTEB6m9taYZF2hC4aWzoH0Lh+cI29tpAjC2oUj7IV9mvP6FvxwLD2x17LCx+c0EuLRv6u8lKs+Ou3H2ll+Z/PqEfBsKprQXXlPih/DfP/CGKrBqgsmovewXdv3gWM8xUeI8r8PqRpt3cPPbRH3FqJBlkIMpy3GdqIpZwClYIr1eUBflTaIqHg3jSGEDBev7Iod
+    test:
+      uid: 20001
+      gid: 20001
+      state: disabled
+    test1:
+      uid: 20002
+      gid: 20002
+      state: disabled
+    test2:
+      uid: 20003
+      gid: 20003
+      state: disabled
+  groups:
+    infra:
+      gid: 10000

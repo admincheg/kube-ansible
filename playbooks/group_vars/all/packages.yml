@@ -1,0 +1,26 @@
+---
+packages_base:
+  - iptables
+  - vim
+  - tcpdump
+  - dnsutils
+  - sysstat
+  - smartmontools
+  - htop
+  - ca-certificates
+  - curl
+  - gpg
+  - gpg-agent
+  - wget
+  - apt-transport-https
+  - telnet
+  - strace
+  - iftop
+  - lsof
+  - ebtables
+  - ethtool
+  - bash-completion
+repos:
+  debian:
+    bookworm:
+      - deb http://deb.debian.org/debian bookworm main contrib non-free non-free-firmware

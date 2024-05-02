@@ -1,0 +1,5 @@
+---
+- name: Update package cache
+  package:
+    update_cache: true
+  listen: "pkg-list-update"

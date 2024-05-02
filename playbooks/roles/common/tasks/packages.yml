@@ -1,0 +1,13 @@
+---
+- name: Place list of sources for Debian
+  copy:
+    dest: "/etc/apt/sources.list"
+    content: "{{ repos[distro][ansible_facts.distribution_release] | join('\n') }}"
+  when:
+    - distro == "debian"
+    - repos[distro][ansible_facts.distribution_release] is defined
+
+- name: Install base apps
+  package:
+    name: "{{ packages_base }}"
+    update_cache: true

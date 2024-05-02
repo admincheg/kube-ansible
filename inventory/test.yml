@@ -1,0 +1,6 @@
+---
+test:
+  hosts:
+    kube1.test.ow1.lv:
+    node1.test.ow1.lv:
+    #node2.test.ow1.lv:

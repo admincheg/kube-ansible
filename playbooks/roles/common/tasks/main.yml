@@ -1,0 +1,33 @@
+---
+- name: Network configration
+  include_tasks: "network.yml"
+
+- name: Prepare server authentication
+  include_tasks: "auth.yml"
+
+- name: Preinstall required apps
+  include_tasks:
+    file: "packages.yml"
+    apply:
+      tags:
+        - packages
+  tags:
+    - packages
+
+- name: Install virtualization subsystem
+  include_tasks:
+    file: "virtualization.yml"
+    apply:
+      tags:
+        - virtualization
+  tags:
+    - virtualization
+
+- name: Server configuration
+  include_tasks:
+    file: "configure.yml"
+    apply:
+      tags:
+        - configure
+  tags:
+    - configure
